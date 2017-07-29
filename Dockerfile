@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 MAINTAINER Hippolyte Barraud <hippolyte.barraud@gmail.com>
 
-ENV DEPENDENCIES_SHADOWSOCKS git-core gettext build-essential autoconf libtool libssl-dev libpcre3-dev asciidoc xmlto zlib1g-dev libev-dev libudns-dev libsodium-dev ca-certificates
+ENV DEPENDENCIES_SHADOWSOCKS git-core gettext build-essential autoconf autotools-dev libtool libssl-dev libpcre3-dev asciidoc xmlto zlib1g-dev libev-dev libudns-dev libsodium-dev ca-certificates
 ENV DEPENDENCIES_KCPTUN golang
 ENV BASEDIR_SHADOWSOCKS /tmp/shadowsocks-libev
 ENV SERVER_PORT 9534
