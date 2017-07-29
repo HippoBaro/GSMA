@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:zesty
 MAINTAINER Hippolyte Barraud <hippolyte.barraud@gmail.com>
 
 ENV DEPENDENCIES_SHADOWSOCKS git-core gettext build-essential autoconf automake libtool libssl-dev libpcre3-dev asciidoc xmlto zlib1g-dev libev-dev libudns-dev libsodium-dev ca-certificates
