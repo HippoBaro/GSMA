@@ -45,4 +45,5 @@ EXPOSE $SERVER_PORT/tcp $SERVER_PORT/udp
 
 # Override the host and port in the config file.
 ADD entrypoint /
+RUN ["chmod", "+x", "/entrypoint"]
 ENTRYPOINT ["/entrypoint"]
