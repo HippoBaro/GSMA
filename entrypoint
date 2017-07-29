@@ -17,14 +17,14 @@ SHADOWSOCKS="/usr/local/bin/ss-server"
 KCPTUN="/usr/go/bin/server"
 
 
-echo "Launching Shadowsocks server over KCP tunnel on $BINDADDR:$PORTNUMBER_KCP"
-echo "KCP tunel mode : $MODE_KCP"
-echo "KCP tunel DSCP : $DSCP_KCP"
-echo "KCP tunel encryption : $ENCRYPTION_KCP"
-echo "Shadowsocks encryption : $ENCRYPTION_SS"
+echo "Launching Shadowsocks server over KCP tunnel on : $BINDADDR:$PORTNUMBER_KCP"
+echo "KCP tunel mode :                                  $MODE_KCP"
+echo "KCP tunel DSCP :                                  $DSCP_KCP"
+echo "KCP tunel encryption :                            $ENCRYPTION_KCP"
+echo "Shadowsocks encryption :                          $ENCRYPTION_SS"
 
-echo "Launching Shadowsocks server on $BINDADDR:$PORTNUMBER_NOKCP"
-echo "Shadowsocks encryption : $ENCRYPTION_SS"
+echo "Launching Shadowsocks server on :                 $BINDADDR:$PORTNUMBER_NOKCP"
+echo "Shadowsocks encryption :                          $ENCRYPTION_SS"
 
 echo "To watch the output, run"
 echo "  docker ps -ql | xargs docker logs -f"
