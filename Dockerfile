@@ -13,8 +13,8 @@ RUN apt-get update \
  && apt-get install --no-install-recommends -y $DEPENDENCIES_SHADOWSOCKS $DEPENDENCIES_KCPTUN
 
 # Install libsodium
-RUN git clone https://github.com/jedisct1/libsodium
-WORKDIR $BASEDIR_SHADOWSOCKS
+RUN git clone https://github.com/jedisct1/libsodium $BASEDIR_LIBSODIUM
+WORKDIR $BASEDIR_LIBSODIUM
 RUN ./autogen.sh \
  && ./configure --prefix=/usr \
  && make \
@@ -22,8 +22,8 @@ RUN ./autogen.sh \
 
 # SHADOWSOCKS
 # Get the latest code, build and install
-RUN git clone https://github.com/shadowsocks/shadowsocks-libev.git $BASEDIR_LIBSODIUM
-WORKDIR $BASEDIR_LIBSODIUM
+RUN git clone https://github.com/shadowsocks/shadowsocks-libev.git $BASEDIR_SHADOWSOCKS
+WORKDIR $BASEDIR_SHADOWSOCKS
 RUN git submodule update --init --recursive \
  && ./autogen.sh \
  && ./configure \
