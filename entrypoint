@@ -1,0 +1,23 @@
+#! /bin/bash
+
+PORTNUMBER="9534"
+BINDADDR="0.0.0.0"
+LOCALPORT="997"
+LOCALHOST="127.0.0.1"
+
+MTU_KCP="1200"
+MODE_KCP="fast"
+DSCP_KCP="46"
+ENCRYPTION_KCP="none"
+
+ENCRYPTION_SS="salsa20"
+
+SHADOWSOCKS="/usr/local/bin/ss-server"
+KCPTUN="/usr/go/bin/server"
+
+
+echo "Launching Shadowsocks server over KCP tunnel..."
+echo "To watch the output, run"
+echo "  docker ps -ql | xargs docker logs -f"
+$KCPTUN -l :$PORTNUMBER -t $LOCALHOST:$LOCALPORT --crypt $ENCRYPTION_KCP --mtu $MTU_KCP --nocomp --mode $MODE_KCP --dscp $DSCP_KCP --key $PASSWORD_KCP &
+$SHADOWSOCKS -s $BINDADDR -p $LOCALPORT -k $PASSWORD_SS -m $ENCRYPTION_SS -u
