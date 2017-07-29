@@ -22,9 +22,9 @@ then
       exit 1
 fi
 
-if [ -z "$ENCRYPTION_KCP" ]
+if [ -z "$PASSWORD_KCP" ]
 then
-      echo "Warning: \$ENCRYPTION_KCP is unset."
+      echo "Error: No password set. Set \$PASSWORD_KCP"
       exit 1
 fi
 
