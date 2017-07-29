@@ -12,8 +12,8 @@ RUN apt-get update \
 
 # SHADOWSOCKS
 # Get the latest code, build and install
-RUN git clone https://github.com/shadowsocks/shadowsocks-libev.git $BASEDIR
-WORKDIR $BASEDIR
+RUN git clone https://github.com/shadowsocks/shadowsocks-libev.git $BASEDIR_SHADOWSOCKS
+WORKDIR $BASEDIR_SHADOWSOCKS
 RUN git submodule update --init --recursive \
  && ./autogen.sh \
  && ./configure \
@@ -26,7 +26,7 @@ RUN go get -u github.com/xtaci/kcptun/server
 
 # Tear down building environment and delete git repository
 WORKDIR /
-RUN rm -rf $BASEDIR/shadowsocks-libev\
+RUN rm -rf $BASEDIR_SHADOWSOCKS/shadowsocks-libev\
  && apt-get --purge autoremove -y $DEPENDENCIES_SHADOWSOCKS
 
 # Port in the config file won't take affect. Instead we'll use 8388.
