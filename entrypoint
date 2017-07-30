@@ -20,8 +20,8 @@ KCPTUN="/usr/go/bin/server"
 # Formatting
 bold=$(tput bold)
 normal=$(tput sgr0)
-orange=$(tput setaf 172)
-blue=$(tput setaf 063)
+orange=$(tput setaf 4)
+blue=$(tput setaf 2)
 
 # Sanity checks
 if [ -z "$PASSWORD_SS" ]
@@ -34,7 +34,7 @@ then
       echo "Error: No KCP password set. Set \$PASSWORD_KCP"
       exit 1
 fi
-if [ [ $IN_ENCRYPTION_SS != *"gcm" ] && [ $IN_ENCRYPTION_SS != *"poly1305" ] ];
+if [[ ( $IN_ENCRYPTION_SS != *"gcm" ) && ( $IN_ENCRYPTION_SS != *"poly1305" ) ]]
 then
       echo "${bold}${orange}Warning : Selected encryption method ($IN_ENCRYPTION_SS) does not implement AEAD ciphers. AEAD ciphers should always be prefered.${normal}"
 fi
