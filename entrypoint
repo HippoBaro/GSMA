@@ -37,26 +37,26 @@ fi
 
 if [[ ( $IN_ENCRYPTION_SS != *"gcm" ) && ( $IN_ENCRYPTION_SS != *"poly1305" ) ]]
 then
-      echo "${bold}${orange}Warning : Selected encryption method ($IN_ENCRYPTION_SS) does not implement AEAD ciphers. AEAD ciphers should always be prefered.${normal}"
+      echo -e "${bold}${orange}Warning : Selected encryption method ($IN_ENCRYPTION_SS) does not implement AEAD ciphers. AEAD ciphers should always be prefered.${normal}"
 fi
 
 echo "To watch the output, run"
 echo "docker ps -ql | xargs docker logs -f"
 
 echo "[Launching obfuscated Shadowsocks server over KCP tunnel...]"
-echo "[\$BINDADDR:\$PORTNUMBER_KCP]    KCP endpoint:            ${blue}${bold}$IN_BINDADDR${normal}:${bold}${blue}$IN_PORTNUMBER_KCP"${normal}
-echo "[\$MODE_KCP]                    KCP tunel mode:          ${blue}${bold}$IN_MODE_KCP"${normal}
-echo "[\$DSCP_KCP]                    KCP tunel DSCP:          ${blue}${bold}$IN_DSCP_KCP"${normal}
-echo "[\$ENCRYPTION_KCP]              KCP tunel encryption:    ${blue}${bold}$IN_ENCRYPTION_KCP"${normal}
-echo "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${blue}${bold}$IN_ENCRYPTION_SS"${normal}
-echo "[\$OBFS_METHOD]                 OBFS method:             ${blue}${bold}$IN_OBFS_METHOD"${normal}
+echo -e "[\$BINDADDR:\$PORTNUMBER_KCP]    KCP endpoint:            ${blue}${bold}$IN_BINDADDR${normal}:${bold}${blue}$IN_PORTNUMBER_KCP"${normal}
+echo -e "[\$MODE_KCP]                    KCP tunel mode:          ${blue}${bold}$IN_MODE_KCP"${normal}
+echo -e "[\$DSCP_KCP]                    KCP tunel DSCP:          ${blue}${bold}$IN_DSCP_KCP"${normal}
+echo -e "[\$ENCRYPTION_KCP]              KCP tunel encryption:    ${blue}${bold}$IN_ENCRYPTION_KCP"${normal}
+echo -e "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${blue}${bold}$IN_ENCRYPTION_SS"${normal}
+echo -e "[\$OBFS_METHOD]                 OBFS method:             ${blue}${bold}$IN_OBFS_METHOD"${normal}
 echo ""
 
 $KCPTUN -l :$PORTNUMBER_KCP -t $IN_LOCALHOST:$IN_LOCALPORT --crypt $IN_ENCRYPTION_KCP --mtu $IN_MTU_KCP --nocomp --mode $IN_MODE_KCP --dscp $IN_DSCP_KCP --key $PASSWORD_KCP &
 $SHADOWSOCKS -s $IN_BINDADDR -p $IN_LOCALPORT -k $PASSWORD_SS -m $IN_ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$IN_OBFS_METHOD" &
 
 echo "[Launching obfuscated Shadowsocks server whith no tunneling...]"
-echo "[\$BINDADDR:\$PORTNUMBER_NOKCP]  Shadowsocks endpoint:    ${blue}${bold}$IN_BINDADDR${normal}:${bold}${blue}$IN_PORTNUMBER_NOKCP"${normal}
-echo "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${blue}${bold}$IN_ENCRYPTION_SS"${normal}
-echo "[\$OBFS_METHOD]                 OBFS method:             ${blue}${bold}$IN_OBFS_METHOD"${normal}
+echo -e "[\$BINDADDR:\$PORTNUMBER_NOKCP]  Shadowsocks endpoint:    ${blue}${bold}$IN_BINDADDR${normal}:${bold}${blue}$IN_PORTNUMBER_NOKCP"${normal}
+echo -e "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${blue}${bold}$IN_ENCRYPTION_SS"${normal}
+echo -e "[\$OBFS_METHOD]                 OBFS method:             ${blue}${bold}$IN_OBFS_METHOD"${normal}
 $SHADOWSOCKS -s $IN_BINDADDR -p $IN_PORTNUMBER_NOKCP -k $PASSWORD_SS -m $IN_ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$IN_OBFS_METHOD --fast-open"
