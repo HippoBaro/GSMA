@@ -16,7 +16,7 @@ RUN apt-get update \
 
 # SHADOWSOCKS
 # Get the latest code, build and install
-RUN git clone https://github.com/shadowsocks/shadowsocks-libev.git --recursive $BASEDIR_SHADOWSOCKS
+RUN git clone https://github.com/shadowsocks/shadowsocks-libev.git --recursive $BASEDIR_SHADOWSOCKS \
  && cd $BASEDIR_SHADOWSOCKS \
  && ./autogen.sh \
  && ./configure \
