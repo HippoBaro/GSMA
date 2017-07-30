@@ -42,19 +42,19 @@ echo "To watch the output, run"
 echo "docker ps -ql | xargs docker logs -f"
 
 echo "[Launching obfuscated Shadowsocks server over KCP tunnel...]"
-echo "[\$BINDADDR:\$PORTNUMBER_KCP]   KCP endpoint:            $bold$BINDADDR$normal:$bold$PORTNUMBER_KCP"$normal
-echo "[\$MODE_KCP]                    KCP tunel mode:          $bold$MODE_KCP"$normal
-echo "[\$DSCP_KCP]                    KCP tunel DSCP:          $bold$DSCP_KCP"$normal
-echo "[\$ENCRYPTION_KCP]              KCP tunel encryption:    $bold$ENCRYPTION_KCP"$normal
-echo "[\$ENCRYPTION_SS]               Shadowsocks encryption:  $bold$ENCRYPTION_SS"$normal
-echo "[\$OBFS_METHOD]                 OBFS method:             $bold$OBFS_METHOD"$normal
+echo "[\$BINDADDR:\$PORTNUMBER_KCP]    KCP endpoint:            ${bold}$BINDADDR${normal}:${bold}$PORTNUMBER_KCP"${normal}
+echo "[\$MODE_KCP]                    KCP tunel mode:          ${bold}$MODE_KCP"${normal}
+echo "[\$DSCP_KCP]                    KCP tunel DSCP:          ${bold}$DSCP_KCP"${normal}
+echo "[\$ENCRYPTION_KCP]              KCP tunel encryption:    ${bold}$ENCRYPTION_KCP"${normal}
+echo "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${bold}$ENCRYPTION_SS"${normal}
+echo "[\$OBFS_METHOD]                 OBFS method:             ${bold}$OBFS_METHOD"${normal}
 echo ""
 
 $KCPTUN -l :$PORTNUMBER_KCP -t $LOCALHOST:$LOCALPORT --crypt $ENCRYPTION_KCP --mtu $MTU_KCP --nocomp --mode $MODE_KCP --dscp $DSCP_KCP --key $PASSWORD_KCP &
 $SHADOWSOCKS -s $BINDADDR -p $LOCALPORT -k $PASSWORD_SS -m $ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$OBFS_METHOD" &
 
 echo "[Launching obfuscated Shadowsocks server whith no tunneling...]"
-echo "[\$BINDADDR:\$PORTNUMBER_NOKCP] Shadowsocks endpoint:    $bold$BINDADDR$normal:$bold$PORTNUMBER_NOKCP"$normal
-echo "[\$ENCRYPTION_SS]               Shadowsocks encryption:  $bold$ENCRYPTION_SS"$normal
-echo "[\$OBFS_METHOD]                 OBFS method:             $bold$OBFS_METHOD"$normal
+echo "[\$BINDADDR:\$PORTNUMBER_NOKCP]  Shadowsocks endpoint:    ${bold}$BINDADDR${normal}:${bold}$PORTNUMBER_NOKCP"${normal}
+echo "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${bold}$ENCRYPTION_SS"${normal}
+echo "[\$OBFS_METHOD]                 OBFS method:             ${bold}$OBFS_METHOD"${normal}
 $SHADOWSOCKS -s $BINDADDR -p $PORTNUMBER_NOKCP -k $PASSWORD_SS -m $ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$OBFS_METHOD --fast-open"
