@@ -11,7 +11,7 @@ MODE_KCP="fast"
 DSCP_KCP="46"
 ENCRYPTION_KCP="none"
 
-ENCRYPTION_SS="salsa20"
+ENCRYPTION_SS="aes-256-gcm"
 
 OBFS_METHOD="tls"
 
@@ -30,23 +30,28 @@ then
       exit 1
 fi
 
-
-echo "[Launching obfuscated Shadowsocks server over KCP tunnel...]"
-echo "KCP endpoint:                       $BINDADDR:$PORTNUMBER_KCP"
-echo "KCP tunel mode :                    $MODE_KCP"
-echo "KCP tunel DSCP :                    $DSCP_KCP"
-echo "KCP tunel encryption :              $ENCRYPTION_KCP"
-echo "Shadowsocks encryption :            $ENCRYPTION_SS"
-echo "OBFS method"                        $OBFS_METHOD
-echo ""
-echo "[Launching obfuscated Shadowsocks server...]"
-echo "Shadowsocks endpoint :              $BINDADDR:$PORTNUMBER_NOKCP"
-echo "Shadowsocks encryption :            $ENCRYPTION_SS"
-echo "OBFS method"                        $OBFS_METHOD
+if [ [ $ENCRYPTION_SS != *"gcm" ] && [$ENCRYPTION_SS != *"poly1305" ] ];
+then
+      echo "Warning : Selected encryption method ($ENCRYPTION_SS) does not implement AEAD ciphers. AEAD ciphers should always be prefered"
+fi
 
 echo "To watch the output, run"
 echo "  docker ps -ql | xargs docker logs -f"
 
+echo "[Launching obfuscated Shadowsocks server over KCP tunnel...]"
+echo "KCP endpoint:                       $BINDADDR:$PORTNUMBER_KCP"
+echo "KCP tunel mode:                     $MODE_KCP"
+echo "KCP tunel DSCP:                     $DSCP_KCP"
+echo "KCP tunel encryption:               $ENCRYPTION_KCP"
+echo "Shadowsocks encryption:             $ENCRYPTION_SS"
+echo "OBFS method:                        $OBFS_METHOD"
+echo ""
+
 $KCPTUN -l :$PORTNUMBER_KCP -t $LOCALHOST:$LOCALPORT --crypt $ENCRYPTION_KCP --mtu $MTU_KCP --nocomp --mode $MODE_KCP --dscp $DSCP_KCP --key $PASSWORD_KCP &
 $SHADOWSOCKS -s $BINDADDR -p $LOCALPORT -k $PASSWORD_SS -m $ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$OBFS_METHOD" &
+
+echo "[Launching obfuscated Shadowsocks server whith no tunneling...]"
+echo "Shadowsocks endpoint:               $BINDADDR:$PORTNUMBER_NOKCP"
+echo "Shadowsocks encryption:             $ENCRYPTION_SS"
+echo "OBFS method:                        $OBFS_METHOD"
 $SHADOWSOCKS -s $BINDADDR -p $PORTNUMBER_NOKCP -k $PASSWORD_SS -m $ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$OBFS_METHOD"
