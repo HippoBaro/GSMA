@@ -49,7 +49,7 @@ echo -e "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${bold}${blue}
 echo -e "[\$OBFS_METHOD]                 OBFS method:             ${bold}${blue}$IN_OBFS_METHOD"${normal}
 echo ""
 
-$KCPTUN -l :$PORTNUMBER_KCP -t $IN_LOCALHOST:$IN_LOCALPORT --crypt $IN_ENCRYPTION_KCP --mtu $IN_MTU_KCP --nocomp --mode $IN_MODE_KCP --dscp $IN_DSCP_KCP --key $PASSWORD_KCP &
+$KCPTUN -l :$IN_PORTNUMBER_KCP -t $IN_LOCALHOST:$IN_LOCALPORT --crypt $IN_ENCRYPTION_KCP --mtu $IN_MTU_KCP --nocomp --mode $IN_MODE_KCP --dscp $IN_DSCP_KCP --key $PASSWORD_KCP &
 $SHADOWSOCKS -s $IN_BINDADDR -p $IN_LOCALPORT -k $PASSWORD_SS -m $IN_ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$IN_OBFS_METHOD" &
 
 echo "[Launching obfuscated Shadowsocks server whith no tunneling...]"
