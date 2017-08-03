@@ -26,12 +26,12 @@ blue='\033[0;34m'
 # Sanity checks
 if [ -z "$PASSWORD_SS" ]
 then
-      echo -e "${bold}${red}Error: No Shadowsocks password set. Set \$PASSWORD_SS"${normal}
+      echo -e "${bold}${red}Error: No Shadowsocks password set. Set \$PASSWORD_SS${normal}"
       exit 1
 fi
 if [ -z "$PASSWORD_KCP" ]
 then
-      echo -e "${bold}${red}Error: No KCP password set. Set \$PASSWORD_KCP"${normal}
+      echo -e "${bold}${red}Error: No KCP password set. Set \$PASSWORD_KCP${normal}"
       exit 1
 fi
 
@@ -41,21 +41,21 @@ then
 fi
 
 echo "[Launching obfuscated Shadowsocks server over KCP tunnel...]"
-echo -e "[\$BINDADDR:\$PORTNUMBER_KCP]    KCP endpoint:            ${bold}${blue}$IN_BINDADDR${normal}:${bold}${blue}$IN_PORTNUMBER_KCP"${normal}
-echo -e "[\$MODE_KCP]                    KCP tunel mode:          ${bold}${blue}$IN_MODE_KCP"${normal}
-echo -e "[\$DSCP_KCP]                    KCP tunel DSCP:          ${bold}${blue}$IN_DSCP_KCP"${normal}
-echo -e "[\$ENCRYPTION_KCP]              KCP tunel encryption:    ${bold}${blue}$IN_ENCRYPTION_KCP"${normal}
-echo -e "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${bold}${blue}$IN_ENCRYPTION_SS"${normal}
-echo -e "[\$OBFS_METHOD]                 OBFS method:             ${bold}${blue}$IN_OBFS_METHOD"${normal}
+echo -e "[\$BINDADDR:\$PORTNUMBER_KCP]    KCP endpoint:            ${bold}${blue}$IN_BINDADDR${normal}:${bold}${blue}$IN_PORTNUMBER_KCP${normal}"
+echo -e "[\$MODE_KCP]                    KCP tunel mode:          ${bold}${blue}$IN_MODE_KCP${normal}"
+echo -e "[\$DSCP_KCP]                    KCP tunel DSCP:          ${bold}${blue}$IN_DSCP_KCP${normal}"
+echo -e "[\$ENCRYPTION_KCP]              KCP tunel encryption:    ${bold}${blue}$IN_ENCRYPTION_KCP${normal}"
+echo -e "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${bold}${blue}$IN_ENCRYPTION_SS${normal}"
+echo -e "[\$OBFS_METHOD]                 OBFS method:             ${bold}${blue}$IN_OBFS_METHOD${normal}"
 echo ""
 
 $KCPTUN -l :$IN_PORTNUMBER_KCP -t $IN_LOCALHOST:$IN_LOCALPORT --crypt $IN_ENCRYPTION_KCP --mtu $IN_MTU_KCP --nocomp --mode $IN_MODE_KCP --dscp $IN_DSCP_KCP --key $PASSWORD_KCP &
 $SHADOWSOCKS -s $IN_BINDADDR -p $IN_LOCALPORT -k $PASSWORD_SS -m $IN_ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$IN_OBFS_METHOD" &
 
 echo "[Launching obfuscated Shadowsocks server whith no tunneling...]"
-echo -e "[\$BINDADDR:\$PORTNUMBER_NOKCP]  Shadowsocks endpoint:    ${bold}${blue}$IN_BINDADDR${normal}:${bold}${blue}$IN_PORTNUMBER_NOKCP"${normal}
-echo -e "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${bold}${blue}$IN_ENCRYPTION_SS"${normal}
-echo -e "[\$OBFS_METHOD]                 OBFS method:             ${bold}${blue}$IN_OBFS_METHOD"${normal}
+echo -e "[\$BINDADDR:\$PORTNUMBER_NOKCP]  Shadowsocks endpoint:    ${bold}${blue}$IN_BINDADDR${normal}:${bold}${blue}$IN_PORTNUMBER_NOKCP${normal}"
+echo -e "[\$ENCRYPTION_SS]               Shadowsocks encryption:  ${bold}${blue}$IN_ENCRYPTION_SS${normal}"
+echo -e "[\$OBFS_METHOD]                 OBFS method:             ${bold}${blue}$IN_OBFS_METHOD${normal}"
 echo ""
 
 $SHADOWSOCKS -s $IN_BINDADDR -p $IN_PORTNUMBER_NOKCP -k $PASSWORD_SS -m $IN_ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$IN_OBFS_METHOD"
