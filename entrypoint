@@ -9,7 +9,7 @@ IN_LOCALHOST=${LOCALHOST:-127.0.0.1}
 IN_MTU_KCP=${MTU_KCP:-1200}
 IN_MODE_KCP=${MODE_KCP:-fast}
 IN_DSCP_KCP=${DSCP_KCP:-46}
-IN_ENCRYPTION_KCP=${ENCRYPTION_KCP:-none}
+IN_ENCRYPTION_KCP=${ENCRYPTION_KCP:-aes-128}
 IN_ENCRYPTION_SS=${ENCRYPTION_SS:-aes-256-gcm}
 IN_OBFS_METHOD=${OBFS_METHOD:-tls}
 
@@ -50,7 +50,7 @@ echo -e "[\$OBFS_METHOD]                 OBFS method:             ${bold}${blue}
 echo ""
 
 $KCPTUN -l :$IN_PORTNUMBER_KCP -t $IN_LOCALHOST:$IN_LOCALPORT --crypt $IN_ENCRYPTION_KCP --mtu $IN_MTU_KCP --nocomp --mode $IN_MODE_KCP --dscp $IN_DSCP_KCP --key $PASSWORD_KCP &
-$SHADOWSOCKS -s $IN_BINDADDR -p $IN_LOCALPORT -k $PASSWORD_SS -m $IN_ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$IN_OBFS_METHOD" &
+$SHADOWSOCKS -s $IN_BINDADDR -p $IN_LOCALPORT -k $PASSWORD_SS -m $IN_ENCRYPTION_SS -u --plugin obfs-server --plugin-opts "obfs=$IN_OBFS_METHOD" -v &
 
 echo "[Launching obfuscated Shadowsocks server whith no tunneling...]"
 echo -e "[\$BINDADDR:\$PORTNUMBER_NOKCP]  Shadowsocks endpoint:    ${bold}${blue}$IN_BINDADDR${normal}:${bold}${blue}$IN_PORTNUMBER_NOKCP${normal}"
